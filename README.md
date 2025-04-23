@@ -44,13 +44,17 @@ A lógica de alocação é baseada na ideia de **paridade de risco por clusters*
 
 ## 📈 Métricas Calculadas
 
-Durante o backtest, são calculadas as seguintes métricas:
+Durante o backtest, as seguintes métricas são computadas para avaliar a qualidade da estratégia de alocação:
 
-- **Retorno do Portfólio (Out-of-Sample)**: Avaliação do desempenho real da alocação.
-- **Concentração do Portfólio**: Indicador de diversificação. Calculado como:  
-  \[
-  \text{Concentração} = \sum_i w_i^2
-  \]
-- **Turnover**: Rotatividade entre períodos consecutivos, calculada com base na diferença ponderada dos pesos ajustados pelos retornos:
+- **📊 Retorno do Portfólio (Out-of-Sample)**  
+  Mede o desempenho da alocação em um período fora da amostra (OoS), ou seja, o retorno obtido com os pesos calculados no mês anterior aplicados aos retornos reais do mês seguinte.
+
+- **📉 Concentração do Portfólio**  
+  Avalia o nível de diversificação do portfólio. Uma concentração alta indica que poucos ativos estão recebendo grande parte do capital. É calculada como a soma dos quadrados dos pesos:  
+  `Concentracao = soma(w_i ** 2)`  
+  Quanto menor esse valor, mais diversificado está o portfólio.
+
+- **🔁 Turnover**  
+  Mede a rotatividade dos ativos no portfólio, ou seja, o quanto os pesos mudam de um período para o outro. Um turnover alto implica em maior custo de transação. É calculado com base na diferença entre os pesos ajustados pelos retornos entre os períodos consecutivos:
   ```python
-  calculate_to(w_t_1, w_t, returns, capital)
+  calculate_to(w_t_1, w_t, r_oos_full, capital)
